@@ -3,7 +3,6 @@ project:
 
 website:
   title: "Portfolio"
-  site-url: "https://www.mayhalfon.com"
   navbar:
     background: "#40798C"
     left: 
