@@ -1,0 +1,31 @@
+project:
+  type: website
+
+website:
+  title: "Portfolio"
+  navbar:
+    background: "#40798C"
+    left: 
+      - text: Home
+        href: index.qmd
+      - text: Projects
+        href: test.qmd
+      - text: Resume
+        href: posts/resume.qmd
+    right:
+      - about.qmd
+      - icon: github
+        href: https://github.com/
+      - icon: twitter
+        href: https://twitter.com
+        
+format:
+  html:
+    theme: 
+      light: litera
+      dark: darkly
+    highlight-style: espresso
+    css: styles.css
+
+editor: visual
+
