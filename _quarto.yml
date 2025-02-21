@@ -23,7 +23,7 @@ website:
       - text: Projects
         href: test.qmd
       - text: Resume
-        href: website/resume.qmd
+        href: resume.qmd
     right:
        - icon: linkedin
          href: https://www.linkedin.com/in/may-halfon-163782289/
