@@ -4,11 +4,14 @@ author: "Harlow Malloc"
 date: "2025-02-15"
 categories: [news, code, analysis]
 draft: true
+
 ---
 
 This is a post with executable code.
 
 ```{r}
+#| output: false
+#| warning: false
 
 library(tidyverse)
 library(janitor)

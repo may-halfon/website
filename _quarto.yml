@@ -20,8 +20,8 @@ website:
     left: 
       - text: Home
         href: index.qmd
-      - text: Projects
-        href: test.qmd
+      - text: IBM Project
+        href: ibm_dataset/index.qmd
       - text: Resume
         href: resume.qmd
     right:
@@ -38,12 +38,12 @@ format:
       dark: [litera, theme_dark_custom.scss]
     code-link: true
     code-fold: show
-    code-tools: true
+    #code-tools: true
     code-block-bg: "#f5f7fa"
     code-block-border-left: "#40798C"
     highlight-style: GitHub
     linkcolor: "black"
     css: styles.css
 
-editor: visual
+
 
