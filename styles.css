@@ -1,8 +1,21 @@
 /* css styles */
-
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&display=swap');
-
-h1.title {
-  font-family: "EB Garamond", serif;
-  font-size: 30px;
+/* Style for the dropdown menu in the code tools */
+.dropdown-menu {
+  background-color: #ffffff;  /* White background for visibility */
+  color: #333333;  /* Dark text color for better contrast */
+  border: 1px solid #ccc;  /* Optional: border to define edges */
 }
+
+/* Style for hover effect on dropdown items */
+.dropdown-menu a {
+  color: #333333;  /* Dark text color */
+  padding: 8px;  /* Adds padding to the items for better clickability */
+  display: block;  /* Ensures the items are block-level */
+}
+
+/* Ensure dropdown items are visible when hovered */
+.dropdown-menu a:hover {
+  background-color: #40798C;  /* Highlight color when hovering */
+  color: white;  /* White text on hover for contrast */
+}
+

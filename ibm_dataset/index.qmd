@@ -1,0 +1,56 @@
+---
+title: "Post With Code"
+author: "Harlow Malloc"
+date: "2025-02-15"
+categories: [news, code, analysis]
+draft: true
+---
+
+This is a post with executable code.
+
+```{r}
+library(tidyverse)
+library(janitor)
+ibm_data <- read.csv("ibm_dataset/ibm_dataset.csv") |> 
+  clean_names()
+
+glimpse(ibm_data)
+```
+
+```{r}
+#ibm_data |> 
+ # group_by(department) |> 
+  #summarise(mean_job_sat = mean(job_satisfaction)) |> 
+  #ggplot() +
+   # geom_point(aes(x = fct_infreq(department),
+    #           y = mean_job_sat))
+ 
+
+  
+  ggplot(ibm_data) +
+    geom_jitter(aes(x = department,
+               y = job_satisfaction), 
+               width = 0.2, height = 0.2)
+ 
+ ggplot(ibm_data) +
+    geom_jitter(aes(x = age,
+               y = job_satisfaction, color = age), 
+               width = 0.18, height = 0.18)
+ ggplot(ibm_data) +
+    geom_jitter(aes(x = job_level,
+               y = job_satisfaction, color = department), 
+               width = 0.18, height = 0.18)
+ ibm_data |> 
+   filter(department == "Research & Development") |> 
+  ggplot() +
+    geom_jitter(aes(x = age,
+               y = job_satisfaction, color = over_time,), 
+               width = 0.15, height = 0.15)
+ 
+ ibm_data |> 
+   mutate(quit_status_label = ifelse(attrition == 1, "Quit", "Not Quit")) |>
+   ggplot() +
+   geom_jitter(aes(x = quit_status_label,
+                   y = job_satisfaction, color = department))
+
+```
