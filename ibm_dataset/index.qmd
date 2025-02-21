@@ -9,12 +9,15 @@ draft: true
 This is a post with executable code.
 
 ```{r}
+
 library(tidyverse)
 library(janitor)
-ibm_data <- read.csv("ibm_dataset/ibm_dataset.csv") |> 
+
+ibm_data <- read_csv("ibm_dataset.csv") |> 
   clean_names()
 
 glimpse(ibm_data)
+
 ```
 
 ```{r}
