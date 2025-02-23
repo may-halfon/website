@@ -1,9 +1,9 @@
 ---
-title: "Post With Code"
-author: "Harlow Malloc"
-date: "2025-02-15"
+title: "IBM Index"
+author: "May Halfon"
+date: "2025-02-22"
 categories: [news, code, analysis]
-draft: true
+draft: false
 
 ---
 
@@ -11,19 +11,113 @@ This is a post with executable code.
 
 ```{r}
 #| output: false
+#| include: false
 #| warning: false
 
 library(tidyverse)
 library(janitor)
+library(ggpattern)
+library(here)
 
-ibm_data <- read_csv("ibm_dataset.csv") |> 
+
+ibm_data <- read_csv(here("ibm_dataset","ibm_dataset.csv")) |> 
   clean_names()
 
-glimpse(ibm_data)
+
 
 ```
 
+
 ```{r}
+#| output: false
+#| warning: false
+# Who tend to quit?
+# added two columns, (1) was re-coding 0 and 1 into quit and not quit, (2) group aged into groups
+ibm_data <- ibm_data |> 
+  mutate(
+    quit_status = ifelse(attrition == 1, "Quit", "Not Quit"),
+    age_group = factor(cut(age, 
+                           breaks = c(18, 25, 35, 45, 55, 65), 
+                           labels = c("18-25", "26-35", "36-45", "46-55", "56-65"),
+                           right = FALSE))  # right=FALSE means [18,25)
+  )
+```
+
+```{r}
+#| output: true
+#| warning: false
+# Number of Employees Who Quit vs. Stayed Across Age Groups
+
+ggplot(ibm_data, aes(x = age_group, fill = factor(quit_status), pattern = factor(quit_status))) + 
+  geom_bar_pattern(position = "dodge", 
+                   pattern_density = 0.1,  
+                   pattern_fill = "dodgerblue",  
+                   pattern_color = "#0066CC") +  
+  geom_text(stat = "count", aes(label = after_stat(count)), 
+            position = position_dodge(width = 0.9), vjust = -0.2) +  
+  scale_fill_manual(values = c("Not Quit" = "#0066CC", "Quit" = "orange"), 
+                    labels = c("Not Quit", "Quit")) +  
+  scale_pattern_manual(values = c("Not Quit" = "stripe", "Quit" = "none")) +  
+  labs(x = "Age Group", y = "Count", fill = "Quit Status") +
+  theme_minimal() +
+  theme_bw() +
+  labs(title = "Number of Employees Who Quit vs. Stayed Across Age Groups") + 
+  theme(legend.key.size = unit(1.5, 'cm')) +
+  guides(
+    pattern = "none", 
+    fill = guide_legend(override.aes = list(pattern = c("stripe", "none"))),
+  ) +
+  theme(legend.position = "right")
+```
+
+
+
+```{r}
+#| output: true
+#| warning: false
+# Quit and Retention Percentages by Age Group
+# Stacked + percent
+ggplot(ibm_data, aes(x = age_group, fill = quit_status)) + 
+  geom_bar(position = "fill") + 
+  scale_y_continuous(labels = scales::percent) + 
+  scale_fill_manual(values = c("Not Quit" = "#0066CC", "Quit" = "#FF9900")) + 
+  labs(x = "Age Group", y = "Percentage", fill = "Quit Status", 
+       title = "Quit and Retention Percentages by Age Group") +
+  theme_minimal()
+
+
+
+
+```
+
+
+
+```{r}
+#| output: false
+#| include: false
+#| warning: false
+# graph with quitting status by group age with no pattern
+ggplot(ibm_data, aes(x = age_group, fill = factor(quit_status))) + 
+  geom_bar(position = "dodge") +  
+  geom_text(stat = "count", aes(label = after_stat(count)), 
+            position = position_dodge(width = 0.9), vjust = -0.2) +  
+  scale_fill_manual(values = c("Not Quit" = "green4", "Quit" = "orange"), 
+                    labels = c("Not Quit", "Quit")) +  # Custom labels for legend
+  labs(x = "Age Group", y = "Count", fill = "Quit Status") +
+  theme_minimal()
+
+```
+
+
+
+
+
+```{r}
+#| output: false
+#| include: false
+#| warning: false
+
+
 #ibm_data |> 
  # group_by(department) |> 
   #summarise(mean_job_sat = mean(job_satisfaction)) |> 
@@ -53,10 +147,9 @@ glimpse(ibm_data)
                y = job_satisfaction, color = over_time,), 
                width = 0.15, height = 0.15)
  
- ibm_data |> 
-   mutate(quit_status_label = ifelse(attrition == 1, "Quit", "Not Quit")) |>
-   ggplot() +
-   geom_jitter(aes(x = quit_status_label,
-                   y = job_satisfaction, color = department))
 
+
+   ggplot(ibm_data) +
+   geom_jitter(aes(x = quit_status,
+                   y = job_satisfaction, color = department))
 ```
