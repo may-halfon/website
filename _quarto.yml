@@ -20,7 +20,7 @@ website:
     left: 
       - text: Home
         href: index.qmd
-      - text: IBM Project
+      - text: Attrition Analysis
         href: ibm_dataset/index.qmd
       - text: Resume
         href: resume.qmd

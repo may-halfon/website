@@ -1,14 +1,17 @@
 ---
-title: "IBM Index"
-author: "May Halfon"
-date: "2025-02-22"
-categories: [news, code, analysis]
-
-
+title: "Understanding Employee Attrition: Data-Driven Insights"
+author: ""
+date: ""
+format: html
+include-after-body: abbrv_toc.html
+number-sections: true
+toc: true
+toc-depth: 2
+toc-title: Contents
 ---
+This analysis focuses on employee attrition using data from the [*IBM HR Analytics Employee Attrition & Performance*](https://www.kaggle.com/datasets/pavansubhasht/ibm-hr-analytics-attrition-dataset). It explores possible reasons why employees leave their jobs and the process used to identify these insights. The examples provided illustrate key factors influencing attrition, but in a real-world setting, a more comprehensive analysis would be necessary. 
 
-This is a post with executable code.
-
+## The Role of Age in Employee Attrition: Trends and Insights {toc-text="Age"}
 ```{r}
 #| output: false
 #| include: false
@@ -22,16 +25,30 @@ library(here)
 
 ibm_data <- read_csv(here("ibm_dataset","ibm_dataset.csv")) |> 
   clean_names()
+```
 
+Visualizing the age distribution to identify natural groupings for analysis.
+```{r}
+#| warning: false
+#| output: true
+#| message: false
 
-
+ggplot(ibm_data, aes(x = age)) +
+  geom_histogram(fill = "#0066CC", color = "#e9ecef", alpha = 0.9, bins = 30) +
+  stat_bin(aes(label = after_stat(count)), geom = "text", vjust = -0.5, size = 3) +
+  theme_minimal() +
+  theme(panel.grid.major = element_blank(),     
+        panel.grid.minor = element_blank()) +   
+  labs(title = "Age Distribution of Employees")
 ```
 
 
 ```{r}
 #| output: false
 #| warning: false
-# Who tend to quit?
+#| message: false
+
+# Modify data
 # added two columns, (1) was re-coding 0 and 1 into quit and not quit, (2) group aged into groups
 ibm_data <- ibm_data |> 
   mutate(
@@ -39,9 +56,10 @@ ibm_data <- ibm_data |>
     age_group = factor(cut(age, 
                            breaks = c(18, 25, 35, 45, 55, 65), 
                            labels = c("18-25", "26-35", "36-45", "46-55", "56-65"),
-                           right = FALSE))  # right=FALSE means [18,25)
+                           right = FALSE))
   )
 ```
+
 
 ```{r}
 #| output: true
@@ -51,8 +69,8 @@ ibm_data <- ibm_data |>
 ggplot(ibm_data, aes(x = age_group, fill = factor(quit_status), pattern = factor(quit_status))) + 
   geom_bar_pattern(position = "dodge", 
                    pattern_density = 0.1,  
-                   pattern_fill = "dodgerblue",  
-                   pattern_color = "#0066CC") +  
+                   pattern_fill = "white",  
+                   pattern_color = "#0066CC", alpha = 0.9) +  
   geom_text(stat = "count", aes(label = after_stat(count)), 
             position = position_dodge(width = 0.9), vjust = -0.2) +  
   scale_fill_manual(values = c("Not Quit" = "#0066CC", "Quit" = "orange"), 
@@ -60,14 +78,16 @@ ggplot(ibm_data, aes(x = age_group, fill = factor(quit_status), pattern = factor
   scale_pattern_manual(values = c("Not Quit" = "stripe", "Quit" = "none")) +  
   labs(x = "Age Group", y = "Count", fill = "Quit Status") +
   theme_minimal() +
-  theme_bw() +
   labs(title = "Number of Employees Who Quit vs. Stayed Across Age Groups") + 
   theme(legend.key.size = unit(1.5, 'cm')) +
   guides(
     pattern = "none", 
     fill = guide_legend(override.aes = list(pattern = c("stripe", "none"))),
   ) +
-  theme(legend.position = "right")
+  theme(legend.position = "right") +
+  theme(panel.grid.major = element_blank(),     
+        panel.grid.minor = element_blank())      
+
 ```
 
 
@@ -78,12 +98,14 @@ ggplot(ibm_data, aes(x = age_group, fill = factor(quit_status), pattern = factor
 # Quit and Retention Percentages by Age Group
 # Stacked + percent
 ggplot(ibm_data, aes(x = age_group, fill = quit_status)) + 
-  geom_bar(position = "fill") + 
+  geom_bar(position = "fill", alpha=0.9) + 
   scale_y_continuous(labels = scales::percent) + 
   scale_fill_manual(values = c("Not Quit" = "#0066CC", "Quit" = "#FF9900")) + 
   labs(x = "Age Group", y = "Percentage", fill = "Quit Status", 
        title = "Quit and Retention Percentages by Age Group") +
-  theme_minimal()
+  theme_minimal() +
+  theme(panel.grid.major = element_blank(),     
+        panel.grid.minor = element_blank())
 
 
 
@@ -104,13 +126,11 @@ ggplot(ibm_data, aes(x = age_group, fill = factor(quit_status))) +
   scale_fill_manual(values = c("Not Quit" = "green4", "Quit" = "orange"), 
                     labels = c("Not Quit", "Quit")) +  # Custom labels for legend
   labs(x = "Age Group", y = "Count", fill = "Quit Status") +
-  theme_minimal()
+  theme_classic()
 
 ```
 
-
-
-
+## Education {toc-text="Education"}
 
 ```{r}
 #| output: false
