@@ -56,7 +56,9 @@ p1
 # added two columns, (1) was re-coding 0 and 1 into quit and not quit, (2) group aged into groups
 ibm_data <- ibm_data |> 
   mutate(
-    quit_status = ifelse(attrition == 1, "Quit", "Retained"),
+    quit_status = factor(attrition,
+                         levels = c(0,1),
+                         labels = c("Retained","Quit")),
     age_group = factor(cut(age, 
                            breaks = c(18, 25, 35, 45, 55, 65), 
                            labels = c("18-25", "26-35", "36-45", "46-55", "56-65"),
@@ -74,12 +76,12 @@ ibm_data <- ibm_data |>
 # Number of Employees Who Quit vs. Stayed Across Age Groups
 
 
-p2 <- ggplot(ibm_data, aes(x = age_group, fill = factor(quit_status))) + 
+p2 <- ggplot(ibm_data, aes(x = age_group, fill = quit_status)) + 
   geom_bar(position = "dodge", alpha = 0.9) + 
   geom_text(stat = "count", aes(label = after_stat(count)), 
             position = position_dodge(width = 0.9), vjust = -0.5) +  
   scale_fill_manual(values = c("Retained" = "#0066CC", "Quit" = "orange"), 
-                    labels = c("Retained", "Quit")) +  
+                    labels = c("Retained", "Quit")) + 
   labs(
     x = "Age Group", 
     y = "Number of Employees", 
@@ -94,7 +96,7 @@ p2 <- ggplot(ibm_data, aes(x = age_group, fill = factor(quit_status))) +
 p3 <- ggplot(ibm_data, aes(x = age_group, fill = quit_status)) + 
   geom_bar(position = "fill", alpha=0.9, show.legend = FALSE) + 
   scale_y_continuous(labels = scales::percent) + 
-  scale_fill_manual(values = c("Retained" = "#0066CC", "Quit" = "#FF9900"), 
+  scale_fill_manual(values = c("Retained" = "#0066CC", "Quit" = "orange"), 
                     labels = c("Retained", "Quit")) + 
   labs(x = "Age Group", y = "Percentage", fill = "Quit Status") +
   theme_minimal() +
