@@ -2092,6 +2092,34 @@
         "Archs": "x64"
       }
     },
+    "patchwork": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "patchwork",
+        "Type": "Package",
+        "Title": "The Composer of Plots",
+        "Version": "1.3.0",
+        "Authors@R": "\n    person(given = \"Thomas Lin\",\n           family = \"Pedersen\",\n           role = c(\"cre\", \"aut\"),\n           email = \"thomasp85@gmail.com\",\n           comment = c(ORCID = \"0000-0002-5147-4711\"))",
+        "Maintainer": "Thomas Lin Pedersen <thomasp85@gmail.com>",
+        "Description": "The 'ggplot2' package provides a strong API for sequentially \n    building up a plot, but does not concern itself with composition of multiple\n    plots. 'patchwork' is a package that expands the API to allow for \n    arbitrarily complex composition of plots by, among others, providing \n    mathematical operators for combining multiple plots. Other packages that try \n    to address this need (but with a different approach) are 'gridExtra' and \n    'cowplot'.",
+        "License": "MIT + file LICENSE",
+        "Encoding": "UTF-8",
+        "Imports": "ggplot2 (>= 3.0.0), gtable, grid, stats, grDevices, utils,\ngraphics, rlang (>= 1.0.0), cli, farver",
+        "RoxygenNote": "7.3.2",
+        "URL": "https://patchwork.data-imaginist.com,\nhttps://github.com/thomasp85/patchwork",
+        "BugReports": "https://github.com/thomasp85/patchwork/issues",
+        "Suggests": "knitr, rmarkdown, gridGraphics, gridExtra, ragg, testthat (>=\n2.1.0), vdiffr, covr, png, gt (>= 0.11.0)",
+        "VignetteBuilder": "knitr",
+        "Config/Needs/website": "gifski",
+        "NeedsCompilation": "no",
+        "Packaged": "2024-09-16 08:14:08 UTC; thomas",
+        "Author": "Thomas Lin Pedersen [cre, aut]\n    (<https://orcid.org/0000-0002-5147-4711>)",
+        "Repository": "CRAN",
+        "Date/Publication": "2024-09-16 09:30:02 UTC",
+        "Built": "R 4.4.2; ; 2025-02-20 03:32:03 UTC; windows"
+      }
+    },
     "pillar": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -3558,16 +3586,16 @@
       "checksum": "77cf2d966f525295f151063bfdc627a7"
     },
     "_quarto.yml": {
-      "checksum": "589bcd80dd2fa9a12434f82f0b3d2083"
+      "checksum": "d5715cd9c1dace7d3ea157fbc189a5a4"
     },
     "_site/about.html": {
       "checksum": "35d55c27b796dd599f814c8266c59da5"
     },
     "_site/ibm_dataset/index.html": {
-      "checksum": "4d5207811f5684fbd5e503c90b9a7c07"
+      "checksum": "e9429c8738f1095a7e4aa8419f3074ab"
     },
     "_site/ibm_dataset/index_files/figure-html/unnamed-chunk-2-1.png": {
-      "checksum": "4d5dff95fe968a93a86904215089a5cd"
+      "checksum": "7766a7235a0384c34c1a71aaaa4e32c7"
     },
     "_site/ibm_dataset/index_files/figure-html/unnamed-chunk-2-2.png": {
       "checksum": "2323a9a9c526f86e57d4b6eb97a27d17"
@@ -3582,31 +3610,64 @@
       "checksum": "cd4385760bdb927dfa18be65ae56e0ea"
     },
     "_site/ibm_dataset/index_files/figure-html/unnamed-chunk-3-1.png": {
-      "checksum": "f5f5f5ddb94edd2de3844ad8b4e35178"
+      "checksum": "7766a7235a0384c34c1a71aaaa4e32c7"
     },
     "_site/ibm_dataset/index_files/figure-html/unnamed-chunk-4-1.png": {
-      "checksum": "12ce9069e5ee9b89eff595c2731a9245"
+      "checksum": "2f5f4f1420ba0dd2312fb76c2de857d1"
     },
     "_site/ibm_dataset/index_files/figure-html/unnamed-chunk-5-1.png": {
-      "checksum": "fa5b9ffef68efc0a500c40524f225d24"
+      "checksum": "1c3bf6af803ca8d6ebffab786f617b8c"
     },
     "_site/ibm_dataset/index_files/figure-html/unnamed-chunk-6-1.png": {
-      "checksum": "9902d8d0c9c4ecd83f2effc2e8dfa93d"
+      "checksum": "110c549e2a12e8323892be6dd1e923b7"
     },
     "_site/ibm_dataset/index_files/figure-html/unnamed-chunk-6-2.png": {
-      "checksum": "60da8e82228292f9f4d6df61a89b1e6a"
+      "checksum": "cff439fcf7996940e77ae56ebdc73807"
     },
     "_site/ibm_dataset/index_files/figure-html/unnamed-chunk-6-3.png": {
-      "checksum": "39bea980b12fed6b033b2ee47bb47485"
+      "checksum": "fbc3afff65f1ac2258b42d0cdfd5f970"
     },
     "_site/ibm_dataset/index_files/figure-html/unnamed-chunk-6-4.png": {
-      "checksum": "10d391914459c203c199e6b3c866c77e"
+      "checksum": "a54a672387312ac0588750de1ef2f630"
     },
     "_site/ibm_dataset/index_files/figure-html/unnamed-chunk-6-5.png": {
-      "checksum": "f87007eb6c0415f76ecf4dd479ce9dac"
+      "checksum": "3c924d932519c181d772ff2cf17c3895"
+    },
+    "_site/ibm_dataset/index_files/figure-html/unnamed-chunk-7-1.png": {
+      "checksum": "4c96fa22dc57c0396a272c508762a287"
+    },
+    "_site/ibm_dataset/index_files/figure-html/unnamed-chunk-7-2.png": {
+      "checksum": "007b0ca9a20981b7c5e996926f85fd07"
+    },
+    "_site/ibm_dataset/index_files/figure-html/unnamed-chunk-7-3.png": {
+      "checksum": "d4bad5eace898adeef4c36f4746433e3"
+    },
+    "_site/ibm_dataset/index_files/figure-html/unnamed-chunk-7-4.png": {
+      "checksum": "881428572fc1f6cfee18d0dc3b28f59a"
+    },
+    "_site/ibm_dataset/index_files/figure-html/unnamed-chunk-7-5.png": {
+      "checksum": "23ec9783ae690edc43f565e559817783"
+    },
+    "_site/ibm_dataset/index_files/figure-html/unnamed-chunk-8-1.png": {
+      "checksum": "454d8d9e9fb2d3088c42ceca5f9e23f6"
+    },
+    "_site/ibm_dataset/index_files/figure-html/unnamed-chunk-8-2.png": {
+      "checksum": "ce104533171668d7357f074de2b97669"
+    },
+    "_site/ibm_dataset/index_files/figure-html/unnamed-chunk-8-3.png": {
+      "checksum": "2dae604477bc99ee7fe2ce70874db46a"
+    },
+    "_site/ibm_dataset/index_files/figure-html/unnamed-chunk-8-4.png": {
+      "checksum": "8a1f8a73d93002515b1cdd1d19fff443"
+    },
+    "_site/ibm_dataset/index_files/figure-html/unnamed-chunk-8-5.png": {
+      "checksum": "626d75beddaee425d80e9301e5e535cf"
+    },
+    "_site/ibm_dataset/index_files/figure-html/unnamed-chunk-9-1.png": {
+      "checksum": "af0cfa007494e85978fe9c69e8da7604"
     },
     "_site/index.html": {
-      "checksum": "4daf52708948b394e133312a205f4833"
+      "checksum": "884cd0b754d81aa3461eb3a9f9efba87"
     },
     "_site/listings.json": {
       "checksum": "5c697dff72533c4e381a2b99fc6a11d0"
@@ -3645,10 +3706,10 @@
       "checksum": "d3d7f79095c5b9894979c52de5d3077f"
     },
     "_site/resume.html": {
-      "checksum": "74a254428be41cbd8da1f0fd76269228"
+      "checksum": "5b3ad1da237a337680d26c6b21160936"
     },
     "_site/search.json": {
-      "checksum": "fcada5c93e45567d2db2c9f9924734c7"
+      "checksum": "b24cee433e1ae26b43add2aa93fcdf58"
     },
     "_site/site_libs/bootstrap/bootstrap-dark.min.css": {
       "checksum": "e35bf613cf0926794afdba197712a2a8"
@@ -3719,11 +3780,14 @@
     "ibm_dataset/_metadata.yml": {
       "checksum": "853c27df20eeddd226095fc51967c573"
     },
+    "ibm_dataset/abbrv_toc.html": {
+      "checksum": "30d8c1a1178378370bf7a7efc43a676d"
+    },
     "ibm_dataset/ibm_dataset.csv": {
       "checksum": "731d3b863d38b4d8b92aa15d4a6838c2"
     },
     "ibm_dataset/index.qmd": {
-      "checksum": "088716950dec0af2844826ea7e08990c"
+      "checksum": "1720712db4f7d35d7e5cf8f9b9cfb6dd"
     },
     "index.qmd": {
       "checksum": "bdcddb922cb6b8f9e42a6f3fbc9f785c"

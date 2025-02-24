@@ -2,9 +2,11 @@
 title: "Understanding Employee Attrition: Data-Driven Insights"
 author: ""
 date: ""
-format: html
-include-after-body: abbrv_toc.html
-number-sections: true
+format: 
+  html:
+    page-layout: full
+    include-after-body: abbrv_toc.html
+    number-sections: true
 toc: true
 toc-depth: 2
 toc-title: Contents
@@ -21,155 +23,97 @@ library(tidyverse)
 library(janitor)
 library(ggpattern)
 library(here)
+library(patchwork)
 
 
 ibm_data <- read_csv(here("ibm_dataset","ibm_dataset.csv")) |> 
   clean_names()
 ```
 
+
+> What is the distribution of age?
+
 Visualizing the age distribution to identify natural groupings for analysis.
 ```{r}
+#| echo: false
 #| warning: false
-#| output: true
-#| message: false
 
-ggplot(ibm_data, aes(x = age)) +
-  geom_histogram(fill = "#0066CC", color = "#e9ecef", alpha = 0.9, bins = 30) +
-  stat_bin(aes(label = after_stat(count)), geom = "text", vjust = -0.5, size = 3) +
+p1 <- ggplot(ibm_data, aes(x = age)) +
+  geom_histogram(fill = "#0066CC", color = "#e9ecef", alpha = 0.9) +
+  stat_bin(aes(label = after_stat(count)), geom = "text", color = "white", vjust = 1.5, size = 3) +
   theme_minimal() +
   theme(panel.grid.major = element_blank(),     
         panel.grid.minor = element_blank()) +   
   labs(title = "Age Distribution of Employees")
+p1
 ```
 
 
 ```{r}
-#| output: false
-#| warning: false
-#| message: false
+#| echo: false
 
 # Modify data
 # added two columns, (1) was re-coding 0 and 1 into quit and not quit, (2) group aged into groups
 ibm_data <- ibm_data |> 
   mutate(
-    quit_status = ifelse(attrition == 1, "Quit", "Not Quit"),
+    quit_status = ifelse(attrition == 1, "Quit", "Retained"),
     age_group = factor(cut(age, 
                            breaks = c(18, 25, 35, 45, 55, 65), 
                            labels = c("18-25", "26-35", "36-45", "46-55", "56-65"),
                            right = FALSE))
   )
+
 ```
 
 
+
+
 ```{r}
-#| output: true
+#| echo: false
 #| warning: false
 # Number of Employees Who Quit vs. Stayed Across Age Groups
 
-ggplot(ibm_data, aes(x = age_group, fill = factor(quit_status), pattern = factor(quit_status))) + 
-  geom_bar_pattern(position = "dodge", 
-                   pattern_density = 0.1,  
-                   pattern_fill = "white",  
-                   pattern_color = "#0066CC", alpha = 0.9) +  
+
+p2 <- ggplot(ibm_data, aes(x = age_group, fill = factor(quit_status))) + 
+  geom_bar(position = "dodge", alpha = 0.9) + 
   geom_text(stat = "count", aes(label = after_stat(count)), 
-            position = position_dodge(width = 0.9), vjust = -0.2) +  
-  scale_fill_manual(values = c("Not Quit" = "#0066CC", "Quit" = "orange"), 
-                    labels = c("Not Quit", "Quit")) +  
-  scale_pattern_manual(values = c("Not Quit" = "stripe", "Quit" = "none")) +  
-  labs(x = "Age Group", y = "Count", fill = "Quit Status") +
+            position = position_dodge(width = 0.9), vjust = -0.5) +  
+  scale_fill_manual(values = c("Retained" = "#0066CC", "Quit" = "orange"), 
+                    labels = c("Retained", "Quit")) +  
+  labs(
+    x = "Age Group", 
+    y = "Number of Employees", 
+    fill = "Quit Status",
+      ) +
   theme_minimal() +
-  labs(title = "Number of Employees Who Quit vs. Stayed Across Age Groups") + 
-  theme(legend.key.size = unit(1.5, 'cm')) +
-  guides(
-    pattern = "none", 
-    fill = guide_legend(override.aes = list(pattern = c("stripe", "none"))),
-  ) +
-  theme(legend.position = "right") +
   theme(panel.grid.major = element_blank(),     
-        panel.grid.minor = element_blank())      
+        panel.grid.minor = element_blank()) 
+      
 
-```
-
-
-
-```{r}
-#| output: true
-#| warning: false
-# Quit and Retention Percentages by Age Group
-# Stacked + percent
-ggplot(ibm_data, aes(x = age_group, fill = quit_status)) + 
-  geom_bar(position = "fill", alpha=0.9) + 
+# Quit and Retention Percentages by Age Group (Stacked + percent)
+p3 <- ggplot(ibm_data, aes(x = age_group, fill = quit_status)) + 
+  geom_bar(position = "fill", alpha=0.9, show.legend = FALSE) + 
   scale_y_continuous(labels = scales::percent) + 
-  scale_fill_manual(values = c("Not Quit" = "#0066CC", "Quit" = "#FF9900")) + 
-  labs(x = "Age Group", y = "Percentage", fill = "Quit Status", 
-       title = "Quit and Retention Percentages by Age Group") +
+  scale_fill_manual(values = c("Retained" = "#0066CC", "Quit" = "#FF9900"), 
+                    labels = c("Retained", "Quit")) + 
+  labs(x = "Age Group", y = "Percentage", fill = "Quit Status") +
   theme_minimal() +
   theme(panel.grid.major = element_blank(),     
-        panel.grid.minor = element_blank())
+        panel.grid.minor = element_blank()) 
 
 
+
+(p2 | p3) + 
+  plot_annotation(
+    title = "Number of Employees Who Quit vs. Retained",
+    theme = theme(plot.title = element_text(hjust = 0.5))
+  ) +
+  plot_layout(guides = "collect") & 
+  theme(legend.position = "top")
 
 
 ```
 
-
-
-```{r}
-#| output: false
-#| include: false
-#| warning: false
-# graph with quitting status by group age with no pattern
-ggplot(ibm_data, aes(x = age_group, fill = factor(quit_status))) + 
-  geom_bar(position = "dodge") +  
-  geom_text(stat = "count", aes(label = after_stat(count)), 
-            position = position_dodge(width = 0.9), vjust = -0.2) +  
-  scale_fill_manual(values = c("Not Quit" = "green4", "Quit" = "orange"), 
-                    labels = c("Not Quit", "Quit")) +  # Custom labels for legend
-  labs(x = "Age Group", y = "Count", fill = "Quit Status") +
-  theme_classic()
-
-```
 
 ## Education {toc-text="Education"}
 
-```{r}
-#| output: false
-#| include: false
-#| warning: false
-
-
-#ibm_data |> 
- # group_by(department) |> 
-  #summarise(mean_job_sat = mean(job_satisfaction)) |> 
-  #ggplot() +
-   # geom_point(aes(x = fct_infreq(department),
-    #           y = mean_job_sat))
- 
-
-  
-  ggplot(ibm_data) +
-    geom_jitter(aes(x = department,
-               y = job_satisfaction), 
-               width = 0.2, height = 0.2)
- 
- ggplot(ibm_data) +
-    geom_jitter(aes(x = age,
-               y = job_satisfaction, color = age), 
-               width = 0.18, height = 0.18)
- ggplot(ibm_data) +
-    geom_jitter(aes(x = job_level,
-               y = job_satisfaction, color = department), 
-               width = 0.18, height = 0.18)
- ibm_data |> 
-   filter(department == "Research & Development") |> 
-  ggplot() +
-    geom_jitter(aes(x = age,
-               y = job_satisfaction, color = over_time,), 
-               width = 0.15, height = 0.15)
- 
-
-
-   ggplot(ibm_data) +
-   geom_jitter(aes(x = quit_status,
-                   y = job_satisfaction, color = department))
-```
