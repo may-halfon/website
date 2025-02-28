@@ -8,9 +8,6 @@ format:
     page-layout: full
     include-after-body: abbrv_toc.html
     number-sections: true
-#output: html_document
-#fig-width: 20
-#fig-height: 14
 toc: true
 toc-depth: 2
 toc-title: Contents
@@ -19,6 +16,7 @@ filters:
    - lightbox
 lightbox: auto
 ---
+
 This analysis focuses on employee attrition using data from the [*IBM HR Analytics Employee Attrition & Performance*](https://www.kaggle.com/datasets/pavansubhasht/ibm-hr-analytics-attrition-dataset). It explores possible reasons why employees leave their jobs and the process used to identify these insights. The examples provided illustrate key factors influencing attrition, but in a real-world setting, a more comprehensive analysis would be necessary.
 
 # Peronal Factors
@@ -34,7 +32,6 @@ library(janitor)
 library(ggpattern)
 library(here)
 library(patchwork)
-library(DT)
 library(gt)
 library(scales)
 library(GGally)
