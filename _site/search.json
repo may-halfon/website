@@ -59,15 +59,15 @@
     "objectID": "ibm_dataset/index.html#the-role-of-age-in-employee-attrition-trends-and-insights",
     "href": "ibm_dataset/index.html#the-role-of-age-in-employee-attrition-trends-and-insights",
     "title": "Understanding Employee Attrition: Data-Driven Insights",
-    "section": "\n1 The Role of Age in Employee Attrition: Trends and Insights",
-    "text": "1 The Role of Age in Employee Attrition: Trends and Insights\n\nWhat is the distribution of age?\n\nVisualizing the age distribution to identify natural groupings for analysis."
+    "section": "\n1.1 The Role of Age in Employee Attrition: Trends and Insights",
+    "text": "1.1 The Role of Age in Employee Attrition: Trends and Insights\n\nWhat is the distribution of age?\n\nTo start my analysis I decided to look if there is a certain age group that seem to be leaving the organization more than others. First I had to look at the age distarbution to determine the size and range of my bins.\nThe following graph visualize the age distribution to identify natural groupings for analysis.\n\n\n\n\n\n\n\n\nThen I added a column that divided the ages into the groups I wanted. In addition, the Attrition column given as 0 (retained) and 1 (quit), therefore I re-coded the data to a factor, which will help me in the analysis moving forward.\nThe following two graphs looks at age group and quit status. The graph to the left point out that more employees who belong to age group 26-35 quit. However, the biggest age group in the data is employees between the age of 26-35 so it is not a surprise that it will be more people quitting there than other age groups. Therefore, it is important to look at the age group percentage. The graph to the right point out another age group that we should pay attention to, employees between 18-25. We can see that with age the quit rate decrease and than increase again when people are passing 56 year of age. Although there are differences in age, this analysis in not enough to determine age is the reason for quitting. Next I am going to test other possibilities that might contribute to employee attrition."
   },
   {
     "objectID": "ibm_dataset/index.html#education",
     "href": "ibm_dataset/index.html#education",
     "title": "Understanding Employee Attrition: Data-Driven Insights",
-    "section": "\n2 Education",
-    "text": "2 Education"
+    "section": "\n2.1 Education",
+    "text": "2.1 Education\n\nWhat is the distribution of education?"
   },
   {
     "objectID": "ibm_dataset/index.html#Age",
@@ -89,5 +89,26 @@
     "title": "Understanding Employee Attrition: Data-Driven Insights",
     "section": "The Role of Age in Employee Attrition: Trends and Insights",
     "text": "The Role of Age in Employee Attrition: Trends and Insights\nVisualizing the age distribution to identify natural groupings for analysis.\n\nCodeggplot(ibm_data, aes(x = age)) +\n  geom_histogram(fill = \"#0066CC\", color = \"#e9ecef\", alpha = 0.9) +\n  stat_bin(aes(label = after_stat(count)), geom = \"text\", vjust = -0.5, size = 3) +\n  theme_minimal() +\n  theme_bw() +\n  theme(panel.grid.major = element_blank(),     \n        panel.grid.minor = element_blank()) +   \n  labs(title = \"Age Distribution of Employees\")\n\n`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.\n`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.\n\n\n\n\n\n\n\n\n\nCode# Modify data\n# added two columns, (1) was re-coding 0 and 1 into quit and not quit, (2) group aged into groups\nibm_data &lt;- ibm_data |&gt; \n  mutate(\n    quit_status = ifelse(attrition == 1, \"Quit\", \"Not Quit\"),\n    age_group = factor(cut(age, \n                           breaks = c(18, 25, 35, 45, 55, 65), \n                           labels = c(\"18-25\", \"26-35\", \"36-45\", \"46-55\", \"56-65\"),\n                           right = FALSE))\n  )\n\n\n\nCode# Number of Employees Who Quit vs. Stayed Across Age Groups\n\nggplot(ibm_data, aes(x = age_group, fill = factor(quit_status), pattern = factor(quit_status))) + \n  geom_bar_pattern(position = \"dodge\", \n                   pattern_density = 0.1,  \n                   pattern_fill = \"white\",  \n                   pattern_color = \"#0066CC\", alpha = 0.9) +  \n  geom_text(stat = \"count\", aes(label = after_stat(count)), \n            position = position_dodge(width = 0.9), vjust = -0.2) +  \n  scale_fill_manual(values = c(\"Not Quit\" = \"#0066CC\", \"Quit\" = \"orange\"), \n                    labels = c(\"Not Quit\", \"Quit\")) +  \n  scale_pattern_manual(values = c(\"Not Quit\" = \"stripe\", \"Quit\" = \"none\")) +  \n  labs(x = \"Age Group\", y = \"Count\", fill = \"Quit Status\") +\n  theme_minimal() +\n  theme_bw() +\n  labs(title = \"Number of Employees Who Quit vs. Stayed Across Age Groups\") + \n  theme(legend.key.size = unit(1.5, 'cm')) +\n  guides(\n    pattern = \"none\", \n    fill = guide_legend(override.aes = list(pattern = c(\"stripe\", \"none\"))),\n  ) +\n  theme(legend.position = \"right\") +\n  theme(panel.grid.major = element_blank(),     \n        panel.grid.minor = element_blank())      \n\n\n\n\n\n\n\n\nCode# Quit and Retention Percentages by Age Group\n# Stacked + percent\nggplot(ibm_data, aes(x = age_group, fill = quit_status)) + \n  geom_bar(position = \"fill\", alpha=0.9) + \n  scale_y_continuous(labels = scales::percent) + \n  scale_fill_manual(values = c(\"Not Quit\" = \"#0066CC\", \"Quit\" = \"#FF9900\")) + \n  labs(x = \"Age Group\", y = \"Percentage\", fill = \"Quit Status\", \n       title = \"Quit and Retention Percentages by Age Group\") +\n  theme_minimal() +\n   theme_bw() +\n  theme(panel.grid.major = element_blank(),     \n        panel.grid.minor = element_blank())"
+  },
+  {
+    "objectID": "ibm_dataset/index.html#department",
+    "href": "ibm_dataset/index.html#department",
+    "title": "Understanding Employee Attrition: Data-Driven Insights",
+    "section": "\n2.1 Department",
+    "text": "2.1 Department"
+  },
+  {
+    "objectID": "ibm_dataset/index.html#distance-from-home",
+    "href": "ibm_dataset/index.html#distance-from-home",
+    "title": "Understanding Employee Attrition: Data-Driven Insights",
+    "section": "\n2.2 Distance From Home",
+    "text": "2.2 Distance From Home\nCreate a contingency table and chi square test\n\n\n\n\n\n\n\nChi-Square Test Results for Quit Status vs Other Variables\n    \n\nVariable\n      Chi-Square Test Statistic\n      P-Value\n    \n\n\n\nGender\n0.2\n0.66\n\n\nDepartment\n4.6\n0.10\n\n\nJob Role\n66.4\n0.00\n\n\nEducation Field\n9.8\n0.08\n\n\nMarital Status\n37.6\n0.00\n\n\nOvertime\n67.8\n0.00"
+  },
+  {
+    "objectID": "ibm_dataset/index.html#digging-deeper---categorical-variables",
+    "href": "ibm_dataset/index.html#digging-deeper---categorical-variables",
+    "title": "Understanding Employee Attrition: Data-Driven Insights",
+    "section": "\n2.1 Digging Deeper - Categorical Variables",
+    "text": "2.1 Digging Deeper - Categorical Variables\n\nWhat is the distribution of education?"
   }
 ]
